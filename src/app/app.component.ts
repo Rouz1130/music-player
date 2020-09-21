@@ -133,6 +133,11 @@ export class AppComponent implements OnInit {
         id: 3,
         title: 'System Of A Down - Toxicity (Official Video).mp3',
         path: './assets/System Of A Down - Toxicity (Official Video).mp3'
+      },
+      {
+        id: 4,
+        title: 'Remy Boyz - My Way RMFX Ft. Drake (Official Video).mp3',
+        path: './assets/Remy Boyz - My Way RMX Ft. Drake.mp3'
       }
     ];
   }
