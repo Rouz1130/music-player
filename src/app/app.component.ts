@@ -22,29 +22,100 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.songs = this.getListOfSongs();
+
+    this.player.nativeElement.src = this.songs[0];
+    this.player.nativeElement.load();
+    this.activeSong = this.songs[0];
+    this.isPlaying = false;
   }
 
-  playSong(): void { }
+  playSong(song): void {
+    this.durationTime = undefined;
+    this.audio.pause();
 
-  onTimeUpdate() { }
+    this.player.nativeElement.src = song.path;
+    this.player.nativeElement.load();
+    this.player.nativeElement.play();
+    this.activeSong = song;
+    this.isPlaying = true;
+  }
 
-  playNextSong() { }
 
-  playPreviousSong(): void { }
+  onTimeUpdate() {
 
-  setSongDuration(): void { }
+    // Set song duration time
+    if (!this.durationTime) {
+      this.setSongDuration();
+    }
 
-  generateMinutes() { }
+    // Emit converted audio currenttime in user friendly ex. 01:15
+    const currentMinutes = this.generateMinutes(this.player.nativeElement.currentTime);
+    const currentSeconds = this.generateSeconds(this.player.nativeElement.currentTime);
+    this.currentTime$.next(this.generateTimeToDisplay(currentMinutes, currentSeconds));
 
-  generateSeconds() { }
 
-  generateTimeToDisplay() { }
+    // Emit amount of song played percents
+    const percents = this.generatePercentage(this.player.nativeElement.currentTime, this.player.nativeElement.duration);
+    if (!isNaN(percents)) {
+      this.currentProgress$.next(percents);
+    }
 
-  generatePercentage() { }
+  }
 
-  onPause(): void { }
-  
+  playNextSong(): void {
+    const nextSongIndex = this.songs.findIndex((song) => song.id === this.activeSong.id + 1);
 
+    if (nextSongIndex === -1) {
+      this.playSong(this.songs[0]);
+    } else {
+      this.playSong(this.songs[nextSongIndex]);
+    }
+  }
+
+  playPreviousSong(): void {
+    const prevSongIndex = this.songs.findIndex((song) => song.id === this.activeSong.id - 1);
+    if (prevSongIndex === -1) {
+      this.playSong(this.songs[this.songs.length - 1]);
+    } else {
+      this.playSong(this.songs[prevSongIndex]);
+    }
+  }
+
+  setSongDuration(): void {
+    const durationInMinutes = this.generateMinutes(this.player.nativeElement.duration);
+    const durationInSeconds = this.generateSeconds(this.player.nativeElement.duration);
+
+    if (!isNaN(this.player.nativeElement.duration)) {
+      this.durationTime = this.generateTimeToDisplay(durationInMinutes, durationInSeconds);
+    }
+  }
+
+
+  // Generate minutes for audio time
+  generateMinutes(currentTime: number): number  {
+    return Math.floor(currentTime / 60);
+  }
+
+  generateSeconds(currentTime: number): number | string {
+    const secsFormula = Math.floor(currentTime % 60);
+    return secsFormula < 10 ? '0' + String(secsFormula) : secsFormula;
+   }
+
+  generateTimeToDisplay(currentMinutes, currentSeconds): string {
+    return `${currentMinutes}: ${currentSeconds}`;
+   }
+
+  // Generate percentage of current song
+  generatePercentage(currentTime: number, duration: number): number {
+    return Math.round(currentTime / duration) * 100;
+   }
+
+   onPause(): void {
+    this.isPlaying = false;
+    this.currentProgress$.next(0);
+    this.currentTime$.next('0:00');
+    this.durationTime = undefined;
+  }
 
   getListOfSongs(): ISong[] {
     return [
