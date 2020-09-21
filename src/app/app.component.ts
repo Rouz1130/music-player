@@ -20,7 +20,31 @@ export class AppComponent implements OnInit {
   durationTime: string;
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.songs = this.getListOfSongs();
+  }
+
+  playSong(): void { }
+
+  onTimeUpdate() { }
+
+  playNextSong() { }
+
+  playPreviousSong(): void { }
+
+  setSongDuration(): void { }
+
+  generateMinutes() { }
+
+  generateSeconds() { }
+
+  generateTimeToDisplay() { }
+
+  generatePercentage() { }
+
+  onPause(): void { }
+  
+
 
   getListOfSongs(): ISong[] {
     return [
