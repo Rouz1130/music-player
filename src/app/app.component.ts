@@ -5,7 +5,7 @@ import { ISong } from './model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -13,11 +13,14 @@ export class AppComponent implements OnInit {
   currentTime$ = new Subject();
 
   @ViewChild('player', { static: true}) player: ElementRef;
+
   songs: ISong[] = [];
+
   audio = new Audio();
   isPlaying = false;
   activeSong;
   durationTime: string;
+  
 
 
   ngOnInit() {
@@ -122,22 +125,32 @@ export class AppComponent implements OnInit {
       {
         id: 1,
         title: 'Evanescence-Bring Me To Life(with lyrics).mp3',
-        path: './assets/Evanescence-Bring Me To Life(with lyrics).mp3'
+        path: './assets/Evanescence-Bring Me To Life(with lyrics).mp3',
+        img: '../../assets/music-logo.jpg'
       },
       {
         id: 2,
-        title: 'Numb (Official Video) - Linkin Park.mp3',
-        path: './assets/Numb (Official Video) - Linkin Park.mp3'
+        title: 'Bob Marley - Buffalo Solider.mp3',
+        path: './assets/Bob Marley - Buffalo Solider.mp3',
+        img: '../../assets/marley.png'
       },
       {
         id: 3,
         title: 'System Of A Down - Toxicity (Official Video).mp3',
-        path: './assets/System Of A Down - Toxicity (Official Video).mp3'
+        path: './assets/System Of A Down - Toxicity (Official Video).mp3',
+        img: '../../assets/music-logo.jpg'
       },
       {
         id: 4,
         title: 'Remy Boyz - My Way RMFX Ft. Drake (Official Video).mp3',
-        path: './assets/Remy Boyz - My Way RMX Ft. Drake.mp3'
+        path: './assets/Remy Boyz - My Way RMX Ft. Drake.mp3',
+        img: '../../assets/music-logo.jpg'
+      },
+      {
+        id: 5,
+        title: 'Gotan Project_ Diferente ...Bad Bass Drop re-edit(Official Video).mp3',
+        path: './assets/Gotan Project_ Diferente ...Bad Bass Drop re-edit.mp3', 
+        img: '../../assets/music-logo.jpg'
       }
     ];
   }

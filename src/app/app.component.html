@@ -1,7 +1,7 @@
 <div class="ui container center-screen">
   <div class="row justify-content-center">
       <div class="col-12">
-       <img src='../../assets/img/logo.png'  >
+        <img src="'../../assets/music-logo.jpg" alt="..." class="img-thumbnail">
       </div>
   </div>
   <br>
@@ -29,7 +29,7 @@
              aria-valuemin="0" aria-valuemax="100"></div>
       </div>
       <br>
-      <button type="button" class="btn btn-outline-dark" (click)="playPreviousSong()"><b>{{ ' << ' }}</b></button>
+      <button type="button" class="btn btn-outline-dark" (click)="playPreviousSong()"><b>{{ '<<' }}</b></button>
 
       <button type="button" class="btn btn-outline-dark" *ngIf="isPlaying" (click)="player.pause()">Stop</button>
       <button type="button" class="btn btn-outline-dark" *ngIf="!isPlaying" (click)="playSong(activeSong)">Play</button>
